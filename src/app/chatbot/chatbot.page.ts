@@ -27,18 +27,17 @@ export class ChatbotPage extends BasePage implements OnInit {
   }
 
   async initBot() {
-    // const _res = await this.network.QNAChat("''");
-    // console.log(_res);
-
     const string = localStorage.getItem('user_chat');
     if (string) {
       const _messages = JSON.parse(string);
       return (this.messages = _messages.chat);
     }
+    this.gettingMessage = true;
     const res = await this.network.chat(this.messages);
     if (res?.status == 'Success') {
       this.messages = res.messages;
     }
+    this.gettingMessage = false;
   }
 
   async sendMessage() {
